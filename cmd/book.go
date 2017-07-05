@@ -14,15 +14,19 @@
 package cmd
 
 import (
+	"bytes"
 	"errors"
 	"log"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strconv"
 
 	"net/http"
 
 	"io/ioutil"
+
+	"io"
 
 	"github.com/spf13/cobra"
 )
@@ -104,7 +108,7 @@ func getBook(id int) error {
 		return err
 	}
 
-	if err = saveBook(file); err != nil {
+	if err = saveBook(string(id), file); err != nil {
 		return err
 	}
 
@@ -158,13 +162,25 @@ func downloadBook(url []byte) ([]byte, error) {
 }
 
 // saveBook saves downloaded book to the given directory specified in the flag
-func saveBook(p []byte) error {
+func saveBook(name string, p []byte) error {
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		if err := os.Mkdir(dir, 0700); err != nil {
 			return err
 		}
+	}
 
+	file, err := os.Create(filepath.Join(dir, name+fileType))
+	if err != nil {
+		return err
+	}
+
+	rdr := bytes.NewReader(p)
+
+	_, err := io.Copy(file, rdr)
+	if err != nil {
+		return err
 	}
 
 	return nil
+
 }
