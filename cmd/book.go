@@ -176,7 +176,7 @@ func saveBook(name string, p []byte) error {
 
 	rdr := bytes.NewReader(p)
 
-	_, err := io.Copy(file, rdr)
+	_, err = io.Copy(file, rdr)
 	if err != nil {
 		return err
 	}
