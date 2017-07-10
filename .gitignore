@@ -1,2 +1,5 @@
 ./maktabah-cli
 maktabah-cli
+./maktabah
+maktabah
+books/*
