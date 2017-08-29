@@ -16,6 +16,7 @@ package cmd
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -108,7 +109,7 @@ func getBook(id int) error {
 		return err
 	}
 
-	if err = saveBook(string(id), file); err != nil {
+	if err = saveBook(strconv.Itoa(id), file); err != nil {
 		return err
 	}
 
@@ -133,6 +134,7 @@ func getPage(url string) ([]byte, error) {
 	if err != nil {
 		return p, err
 	}
+	fmt.Println(string(p))
 	resp.Body.Close()
 
 	return p, err
@@ -151,12 +153,25 @@ func findRARLink(p []byte) ([]byte, error) {
 		return rarURL, errors.New("no rar link found")
 	}
 
+	fmt.Println(string(rarURL))
+
 	return rarURL, nil
 }
 
 // downloadBook downloads the book
 func downloadBook(url []byte) ([]byte, error) {
 	var f []byte
+
+	resp, err := http.Get(string(url))
+	if err != nil {
+		return f, err
+	}
+	f, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return f, err
+	}
+
+	resp.Body.Close()
 
 	return f, nil
 }
@@ -169,7 +184,7 @@ func saveBook(name string, p []byte) error {
 		}
 	}
 
-	file, err := os.Create(filepath.Join(dir, name+fileType))
+	file, err := os.Create(filepath.Join(dir, name+"."+fileType))
 	if err != nil {
 		return err
 	}
