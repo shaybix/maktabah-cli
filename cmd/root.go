@@ -8,8 +8,7 @@ import (
 var RootCmd = &cobra.Command{
 	Use:   "maktabah",
 	Short: "Maktabah is a command line tool for Shamela Books",
-	Long: `
-A robust tool that allows you to search, download, and manage shamela books. 
+	Long: `A robust tool that allows you to search, download, and manage shamela books. 
 
 For more information see https://github.com/shaybix/maktabah-cli`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -20,13 +19,7 @@ For more information see https://github.com/shaybix/maktabah-cli`,
 // Execute executes the rootCmd
 func Execute() {
 
-	AddCommands()
 	if c, err := RootCmd.ExecuteC(); err != nil {
 		c.Println(c.UsageString())
 	}
-}
-
-// AddCommands adds child commands to the root command
-func AddCommands() {
-	RootCmd.AddCommand(downloadCmd)
 }
