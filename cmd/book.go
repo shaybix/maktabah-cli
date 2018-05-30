@@ -1,4 +1,4 @@
-// Copyright © 2017 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2017 Abdisamad Hashi <shaybix@tuta.io>
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -36,7 +36,6 @@ import (
 var bookCmd = &cobra.Command{
 	Use:   "book",
 	Short: "Download a book by it's ID",
-	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		if id == 0 {
 			cmd.Println(cmd.UsageString())

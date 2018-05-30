@@ -21,3 +21,11 @@ Below are a list of features and tasks to be either implemented in the near futu
 
 
 
+#### Linting issues to investigate
+```
+cmd/crawl.go
+initWorker passes lock by value: cmd.Job contains sync.Mutex(53,1)
+literal copies lock value from job: cmd.Job contains sync.Mutex(57,1)
+assignment copies lock value to job: cmd.Job contains sync.Mutex(69,1)
+
+```

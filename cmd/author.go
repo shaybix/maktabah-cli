@@ -14,30 +14,37 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-// downloadCmd represents the download command
-var downloadCmd = &cobra.Command{
-	Use:   "download",
-	Short: "Download books by author, book, or category IDs",
-	Long:  ``,
+// authorCmd represents the author command
+var authorCmd = &cobra.Command{
+	Use:   "author",
+	Short: "Download all books specific to an author.",
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Println(cmd.UsageString())
+		author := Author{}
+
+		if err := author.run(); err != nil {
+			fmt.Println(err.Error())
+		}
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(downloadCmd)
+	downloadCmd.AddCommand(authorCmd)
+}
 
-	// Here you will define your flags and configuration settings.
+// Author represents the author of books on shamela
+type Author struct {
+	name  string
+	died  string
+	books []Book
+}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// downloadCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// downloadCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
+// run will execute the process of scraping the website
+// for authors
+func (a *Author) run() error {
+	return nil
 }

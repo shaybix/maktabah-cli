@@ -1,5 +1,6 @@
 build:
 	go build -o maktabah
 
-install:
+install: 
 	go install -o maktabah
+
